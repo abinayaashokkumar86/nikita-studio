@@ -9,21 +9,28 @@ import AlbumsSection from "@/components/AlbumsSection";
 import BookingSection from "@/components/BookingSection";
 import GallerySection from "@/components/GallerySection";
 import FooterSection from "@/components/FooterSection";
+import CertificatesSection from "@/components/CertificatesSection";
+import { usePublicSiteData } from "@/hooks/usePublicSiteData";
 
-const Index = () => (
-  <div className="min-h-screen">
-    <Navbar />
-    <HeroSection />
-    <QuickNav />
-    <AboutSection />
-    <FeaturedVideo />
-    <JourneyTimeline />
-    <PerformancesSection />
-    <AlbumsSection />
-    <BookingSection />
-    <GallerySection />
-    <FooterSection />
-  </div>
-);
+const Index = () => {
+  const { content, media } = usePublicSiteData();
+
+  return (
+    <div className="min-h-screen">
+      <Navbar />
+      <HeroSection content={content} media={media} />
+      <QuickNav />
+      <AboutSection />
+      <FeaturedVideo content={content} media={media} />
+      <JourneyTimeline />
+      <PerformancesSection media={media} />
+      <AlbumsSection content={content} media={media} />
+      <CertificatesSection content={content} media={media} />
+      <BookingSection />
+      <GallerySection content={content} media={media} />
+      <FooterSection />
+    </div>
+  );
+};
 
 export default Index;
