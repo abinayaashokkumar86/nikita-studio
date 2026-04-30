@@ -8,6 +8,7 @@ import NotFound from "./pages/NotFound.tsx";
 import Developer from "./pages/Developer.tsx";
 
 const queryClient = new QueryClient();
+const isDeveloperModeEnabled = import.meta.env.VITE_ENABLE_DEVELOPER_MODE === "true";
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -17,7 +18,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/developer" element={<Developer />} />
+          {isDeveloperModeEnabled ? <Route path="/developer" element={<Developer />} /> : null}
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
