@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Calendar, Music2, GraduationCap, MessageSquare, Send, CheckCircle } from "lucide-react";
+import { Calendar, Music2, GraduationCap, MessageSquare, Send, CheckCircle, Mail } from "lucide-react";
 
 type BookingType = "performance" | "lesson" | "inquiry";
 
@@ -30,9 +30,15 @@ const BookingSection = () => {
         <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-gold text-center mb-4">
           Work With Nikita
         </h2>
-        <p className="text-cream/60 text-lg text-center max-w-2xl mx-auto mb-16">
+        <p className="text-cream/60 text-lg text-center max-w-2xl mx-auto mb-4">
           Whether it's a live performance, a private lesson, or a creative collaboration — reach out to get started.
         </p>
+        <a
+          href="mailto:nikitamusicalstudio@gmail.com"
+          className="mx-auto mb-16 flex w-fit items-center gap-2 text-gold hover:text-teal transition-colors text-sm sm:text-base"
+        >
+          <Mail className="w-4 h-4" /> nikitamusicalstudio@gmail.com
+        </a>
 
         {/* Booking type selector */}
         <div className="grid sm:grid-cols-3 gap-6 mb-12">

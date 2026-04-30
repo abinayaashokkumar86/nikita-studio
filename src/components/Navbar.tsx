@@ -29,7 +29,7 @@ const Navbar = () => {
       <div className="container mx-auto flex items-center justify-between py-4 px-6">
         <a href="#" className="flex items-center gap-2 text-gold font-display text-2xl font-bold tracking-wide">
           <Music className="w-6 h-6" />
-          Nikita Wired
+          Nikita Studio
         </a>
 
         {/* Desktop */}

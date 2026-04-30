@@ -1,4 +1,4 @@
-# Nikita Wired
+# Nikita Studio
 
 A React + Vite + TypeScript website originally exported from Lovable.
 

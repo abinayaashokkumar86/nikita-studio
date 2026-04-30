@@ -14,7 +14,7 @@ const HeroSection = () => (
         Saraswati Veena • Frisco ISD, Texas
       </p>
       <h1 className="font-display text-5xl sm:text-7xl lg:text-8xl font-bold mb-4 animate-fade-in-up animation-delay-200">
-        <span className="animate-shimmer">Nikita Wired</span>
+        <span className="animate-shimmer">Nikita Studio</span>
       </h1>
       <p className="font-display text-xl sm:text-2xl text-cream/80 mb-3 animate-fade-in-up animation-delay-200">
         Nikita Prakash – Veena Artist &amp; Aspiring Physician

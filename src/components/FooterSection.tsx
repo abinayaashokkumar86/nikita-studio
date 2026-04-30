@@ -6,7 +6,7 @@ const FooterSection = () => (
       <div className="grid md:grid-cols-3 gap-12 mb-12">
         <div>
           <a href="#" className="flex items-center gap-2 text-gold font-display text-2xl font-bold mb-4">
-            <Music className="w-5 h-5" /> Nikita Wired
+            <Music className="w-5 h-5" /> Nikita Studio
           </a>
           <p className="text-muted-foreground text-sm leading-relaxed mb-4">
             Young Saraswati Veena virtuoso from Frisco, Texas. Dedicated to preserving and sharing the beauty of Carnatic music with the world.
@@ -32,8 +32,8 @@ const FooterSection = () => (
 
         <div>
           <h4 className="text-foreground font-semibold mb-4">Connect</h4>
-          <a href="mailto:contact@nikitawired.com" className="flex items-center gap-2 text-muted-foreground text-sm hover:text-gold transition-colors mb-4">
-            <Mail className="w-4 h-4" /> contact@nikitawired.com
+          <a href="mailto:nikitamusicalstudio@gmail.com" className="flex items-center gap-2 text-muted-foreground text-sm hover:text-gold transition-colors mb-4">
+            <Mail className="w-4 h-4" /> nikitamusicalstudio@gmail.com
           </a>
           <a href="#" className="flex items-center gap-2 text-muted-foreground text-sm hover:text-gold transition-colors mb-6">
             <ExternalLink className="w-4 h-4" /> YouTube Channel
@@ -49,7 +49,7 @@ const FooterSection = () => (
       </div>
 
       <div className="border-t border-border pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-muted-foreground text-xs">
-        <p>© {new Date().getFullYear()} Nikita Wired. All rights reserved.</p>
+        <p>© {new Date().getFullYear()} Nikita Studio. All rights reserved.</p>
         <p className="text-cream/40">Last Updated: {new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" })}</p>
         <p className="text-teal">Proud 7th Grader, Frisco ISD, Texas 🎓</p>
       </div>
