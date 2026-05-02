@@ -1,3 +1,4 @@
+import { siteContent } from "@/data/siteContent";
 import type { ContentMap, MediaItemRow } from "@/lib/siteData";
 
 type CertificatesSectionProps = {
@@ -13,7 +14,7 @@ const CertificatesSection = ({ content, media }: CertificatesSectionProps) => {
   return (
     <section id="certificates" className="py-24 px-6">
       <div className="container mx-auto max-w-6xl">
-        <p className="text-teal uppercase tracking-[0.3em] text-sm font-medium text-center mb-3">Achievements</p>
+        <p className="text-teal uppercase tracking-[0.3em] text-sm font-medium text-center mb-3">{siteContent.certificates.eyebrow}</p>
         <h2 className="font-display text-4xl sm:text-5xl font-bold text-gold text-center mb-16">{content.certificates_title}</h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {certificates.map((item) => (
@@ -25,7 +26,7 @@ const CertificatesSection = ({ content, media }: CertificatesSectionProps) => {
               className="bg-card border border-border rounded-xl p-6 hover:shadow-gold transition-all duration-300"
             >
               <p className="text-foreground font-semibold mb-2">{item.title}</p>
-              <p className="text-muted-foreground text-sm">{item.description || "Certificate"}</p>
+              <p className="text-muted-foreground text-sm">{item.description || siteContent.certificates.defaultDescription}</p>
             </a>
           ))}
         </div>

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ADMIN_EMAIL, isSupabaseConfigured, supabase } from "@/lib/supabaseClient";
 import type { MediaCategory, MediaItemRow, SiteContentRow } from "@/lib/siteData";
 
@@ -23,6 +23,7 @@ const Developer = () => {
   const [uploadFile, setUploadFile] = useState<File | null>(null);
   const [mediaForm, setMediaForm] = useState(emptyMediaForm);
   const [status, setStatus] = useState("");
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const selectedCategory = useMemo(() => activeTab.toLowerCase() as MediaCategory, [activeTab]);
   const filteredMedia = mediaItems.filter((item) => item.category === selectedCategory);
 
@@ -79,30 +80,47 @@ const Developer = () => {
   };
 
   const uploadMedia = async () => {
-    if (!supabase || !uploadFile) return;
-    const path = `${mediaForm.category}/${Date.now()}-${uploadFile.name}`;
+    if (!supabase) {
+      setStatus("Supabase is not configured.");
+      return;
+    }
+    if (!uploadFile) {
+      setStatus("Please select a file first.");
+      return;
+    }
+    if (!mediaForm.title.trim()) {
+      setStatus("Please enter a title.");
+      return;
+    }
+
+    const safeFileName = uploadFile.name.replace(/[^a-zA-Z0-9._-]/g, "-");
+    const path = `${selectedCategory}/${Date.now()}-${safeFileName}`;
+
+    setStatus("Uploading...");
     const uploadRes = await supabase.storage.from("nikita-media").upload(path, uploadFile, {
       upsert: true,
     });
     if (uploadRes.error) {
-      setStatus(uploadRes.error.message);
+      setStatus(`Upload failed: ${uploadRes.error.message}`);
       return;
     }
     const { data } = supabase.storage.from("nikita-media").getPublicUrl(path);
     const payload = {
       ...mediaForm,
-      category: mediaForm.category,
+      title: mediaForm.title.trim(),
+      category: selectedCategory,
       storage_path: path,
       public_url: data.publicUrl,
     };
     const { error } = await supabase.from("media_items").insert(payload);
     if (error) {
-      setStatus(error.message);
+      setStatus(`Database save failed: ${error.message}`);
       return;
     }
-    setMediaForm(emptyMediaForm);
     setUploadFile(null);
-    setStatus("Uploaded and saved.");
+    setMediaForm({ ...emptyMediaForm, category: selectedCategory });
+    if (fileInputRef.current) fileInputRef.current.value = "";
+    setStatus("Uploaded and saved successfully.");
     await loadDashboard();
   };
 
@@ -191,9 +209,10 @@ const Developer = () => {
             <div className="flex flex-wrap gap-3">
               <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={mediaForm.is_featured} onChange={(e) => setMediaForm((f) => ({ ...f, is_featured: e.target.checked, category: selectedCategory }))} /> Featured</label>
               <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={mediaForm.is_visible} onChange={(e) => setMediaForm((f) => ({ ...f, is_visible: e.target.checked, category: selectedCategory }))} /> Visible</label>
-              <input type="file" onChange={(e) => setUploadFile(e.target.files?.[0] || null)} className="text-sm" />
+              <input ref={fileInputRef} type="file" onChange={(e) => setUploadFile(e.target.files?.[0] || null)} className="text-sm" />
               <button onClick={uploadMedia} className="rounded-lg bg-primary text-primary-foreground px-4 py-2 text-sm">Upload</button>
             </div>
+            {status ? <p className="text-sm text-muted-foreground">{status}</p> : null}
 
             <div className="space-y-3">
               {filteredMedia.map((item) => (

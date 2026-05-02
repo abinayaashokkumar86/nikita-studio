@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { isSupabaseConfigured, supabase } from "@/lib/supabaseClient";
-import { fallbackContent, type ContentMap, type MediaItemRow, type SiteContentRow } from "@/lib/siteData";
+import { fallbackContent, fallbackMedia, type ContentMap, type MediaItemRow, type SiteContentRow } from "@/lib/siteData";
 
 type State = {
   content: ContentMap;
@@ -11,7 +11,7 @@ type State = {
 export const usePublicSiteData = (): State => {
   const [state, setState] = useState<State>({
     content: fallbackContent,
-    media: [],
+    media: fallbackMedia,
     loading: true,
   });
 
@@ -41,12 +41,12 @@ export const usePublicSiteData = (): State => {
           });
         }
 
-        const nextMedia =
+        const remoteMedia =
           !mediaRes.error && mediaRes.data
             ? (mediaRes.data as MediaItemRow[]).filter((item) => item.is_visible !== false)
-            : [];
+            : null;
 
-        setState({ content: nextContent, media: nextMedia, loading: false });
+        setState({ content: nextContent, media: remoteMedia?.length ? remoteMedia : fallbackMedia, loading: false });
       } catch {
         if (!mounted) return;
         setState((prev) => ({ ...prev, loading: false }));

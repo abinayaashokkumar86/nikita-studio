@@ -1,14 +1,6 @@
 import { useState, useEffect } from "react";
 import { Music, Menu, X } from "lucide-react";
-
-const navLinks = [
-  { href: "#about", label: "About" },
-  { href: "#journey", label: "Journey" },
-  { href: "#performances", label: "Performances" },
-  { href: "#albums", label: "Albums" },
-  { href: "#booking", label: "Booking" },
-  { href: "#gallery", label: "Gallery" },
-];
+import { siteContent } from "@/data/siteContent";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -29,12 +21,12 @@ const Navbar = () => {
       <div className="container mx-auto flex items-center justify-between py-4 px-6">
         <a href="#" className="flex items-center gap-2 text-gold font-display text-2xl font-bold tracking-wide">
           <Music className="w-6 h-6" />
-          Nikita Studio
+          {siteContent.navigation.brand}
         </a>
 
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((l) => (
+          {siteContent.navigation.links.map((l) => (
             <a key={l.href} href={l.href} className="text-cream/70 hover:text-gold transition-colors text-sm font-medium tracking-wide uppercase">
               {l.label}
             </a>
@@ -50,7 +42,7 @@ const Navbar = () => {
       {/* Mobile menu */}
       {open && (
         <div className="md:hidden bg-background/95 backdrop-blur-md border-t border-border px-6 pb-6">
-          {navLinks.map((l) => (
+          {siteContent.navigation.links.map((l) => (
             <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="block py-3 text-cream/70 hover:text-gold transition-colors text-sm uppercase tracking-wide">
               {l.label}
             </a>

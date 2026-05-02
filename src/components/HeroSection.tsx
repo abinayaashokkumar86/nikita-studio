@@ -1,4 +1,4 @@
-import heroMain from "@/assets/nikita-hero-cinematic.jpg";
+import { siteContent } from "@/data/siteContent";
 import type { ContentMap, MediaItemRow } from "@/lib/siteData";
 
 type HeroSectionProps = {
@@ -8,13 +8,13 @@ type HeroSectionProps = {
 
 const HeroSection = ({ content, media }: HeroSectionProps) => {
   const featuredImage = media.find((item) => item.category === "images" && item.is_featured);
-  const heroImageUrl = featuredImage?.public_url || heroMain;
+  const heroImageUrl = featuredImage?.public_url || siteContent.assets.heroImage;
 
   return (
   <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
     {/* Background – full hero image */}
     <div className="absolute inset-0">
-      <img src={heroImageUrl} alt="Nikita playing Saraswati Veena" className="w-full h-full object-cover" />
+      <img src={heroImageUrl} alt={siteContent.hero.imageAlt} className="w-full h-full object-cover" />
       <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/20 to-background" />
     </div>
 
@@ -38,15 +38,19 @@ const HeroSection = ({ content, media }: HeroSectionProps) => {
 
       {/* CTA Buttons */}
       <div className="flex flex-col sm:flex-row flex-wrap gap-3 justify-center animate-fade-in-up animation-delay-600">
-        <a href="#about" className="gradient-gold text-primary-foreground px-7 py-3.5 rounded-lg font-semibold text-sm uppercase tracking-wider hover:opacity-90 transition-opacity">
-          Explore My Journey
-        </a>
-        <a href="#performances" className="border border-gold text-gold px-7 py-3.5 rounded-lg font-semibold text-sm uppercase tracking-wider hover:bg-gold/10 transition-colors">
-          Watch Performances
-        </a>
-        <a href="#booking" className="border border-gold text-gold px-7 py-3.5 rounded-lg font-semibold text-sm uppercase tracking-wider hover:bg-gold/10 transition-colors">
-          Book Nikita
-        </a>
+        {siteContent.hero.ctas.map((cta) => (
+          <a
+            key={cta.href}
+            href={cta.href}
+            className={
+              cta.variant === "primary"
+                ? "gradient-gold text-primary-foreground px-7 py-3.5 rounded-lg font-semibold text-sm uppercase tracking-wider hover:opacity-90 transition-opacity"
+                : "border border-gold text-gold px-7 py-3.5 rounded-lg font-semibold text-sm uppercase tracking-wider hover:bg-gold/10 transition-colors"
+            }
+          >
+            {cta.label}
+          </a>
+        ))}
       </div>
     </div>
 
